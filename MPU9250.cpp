@@ -237,6 +237,18 @@ void MPU9250::read_acc()
     
 }
 
+void MPU9250::read_acc_raw()
+{
+    uint8_t response[6];
+    int i;
+    ReadRegs(MPUREG_ACCEL_XOUT_H,response,6);
+    for(i = 0; i < 3; i++) {
+        acc_data_raw[i] = ((int16_t)response[i*2]<<8)|response[i*2+1];
+    }
+    
+}
+
+
 /*                                 READ GYROSCOPE
  * usage: call this function to read gyroscope data. Axis represents selected axis:
  * 0 -> X axis
@@ -255,6 +267,17 @@ void MPU9250::read_gyro()
         bit_data = ((int16_t)response[i*2]<<8) | response[i*2+1];
         data = (float)bit_data;
         gyro_data[i] = data/gyro_divider - g_bias[i];
+    }
+
+}
+
+void MPU9250::read_gyro_raw()
+{
+    uint8_t response[6];
+    int i;
+    ReadRegs(MPUREG_GYRO_XOUT_H,response,6);
+    for(i = 0; i < 3; i++) {
+        gyro_data_raw[i] = ((int16_t)response[i*2]<<8) | response[i*2+1];
     }
 
 }

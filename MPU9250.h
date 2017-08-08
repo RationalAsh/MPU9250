@@ -222,7 +222,9 @@ public:
     bool init(bool calib_gyro = true, bool calib_acc = true);
     void read_temp();
     void read_acc();
+    void read_acc_raw();
     void read_gyro();
+    void read_gyro_raw();
     unsigned int set_gyro_scale(int scale);
     unsigned int set_acc_scale(int scale);
     void calib_acc();
@@ -233,7 +235,9 @@ public:
     uint8_t AK8963_whoami();
     uint8_t get_CNTL1();
     void read_mag();
+    //void read_mag_raw();
     void read_all();
+    void read_all_raw();
     void calibrate(float *dest1, float *dest2);
  
     
@@ -247,7 +251,9 @@ public:
     float temperature;
     float gyro_data[3];
     float mag_data[3];
-    int16_t mag_data_raw[3];    
+    int16_t mag_data_raw[3];
+    int16_t gyro_data_raw[3];
+    int16_t acc_data_raw[3];
 
 private:
     long my_clock;
