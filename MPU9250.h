@@ -235,7 +235,7 @@ public:
     uint8_t AK8963_whoami();
     uint8_t get_CNTL1();
     void read_mag();
-    //void read_mag_raw();
+    void read_mag_raw();
     void read_all();
     void read_all_raw();
     void calibrate(float *dest1, float *dest2);

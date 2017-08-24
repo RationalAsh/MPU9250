@@ -402,6 +402,25 @@ void MPU9250::read_mag(){
     }
 }
 
+void MPU9250::read_mag(){
+    uint8_t response[7];
+    float data;
+    int i;
+
+    WriteReg(MPUREG_I2C_SLV0_ADDR,AK8963_I2C_ADDR|READ_FLAG);  // Set the I2C slave addres of AK8963 and set for read.
+    WriteReg(MPUREG_I2C_SLV0_REG, AK8963_HXL);                 // I2C slave 0 register address from where to begin data transfer
+    WriteReg(MPUREG_I2C_SLV0_CTRL, 0x87);                      // Read 6 bytes from the magnetometer
+
+    // delayMicroseconds(1000);
+    ReadRegs(MPUREG_EXT_SENS_DATA_00,response,7);
+    // must start your read from AK8963A register 0x03 and read seven bytes so that upon read of ST2 register 0x09 the AK8963A will unlatch the data registers for the next measurement.
+    for(i = 0; i < 3; i++) {
+        mag_data_raw[i] = ((int16_t)response[i*2+1]<<8)|response[i*2];
+        //data = (float)mag_data_raw[i];
+        //mag_data[i] = data*Magnetometer_ASA[i];
+    }
+}
+
 uint8_t MPU9250::get_CNTL1(){
     WriteReg(MPUREG_I2C_SLV0_ADDR,AK8963_I2C_ADDR|READ_FLAG); // Set the I2C slave addres of AK8963 and set for read.
     WriteReg(MPUREG_I2C_SLV0_REG, AK8963_CNTL1);              // I2C slave 0 register address from where to begin data transfer
