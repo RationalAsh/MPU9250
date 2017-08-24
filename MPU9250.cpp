@@ -402,7 +402,7 @@ void MPU9250::read_mag(){
     }
 }
 
-void MPU9250::read_mag(){
+void MPU9250::read_mag_raw(){
     uint8_t response[7];
     float data;
     int i;
